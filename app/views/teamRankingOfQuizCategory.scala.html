@@ -1,0 +1,16 @@
+@(quizCategoryName: String, teams: List[(String, Int)])
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>@quizCategoryName ランキング</title>
+    </head>
+    <body>
+        <h1>@quizCategoryName ランキング</h1>
+        <ol>
+        @for(team <- teams) {
+            <li>@team._1 (@team._2)</li>
+        }
+        </ol>
+    </body>
+</html>

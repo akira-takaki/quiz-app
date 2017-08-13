@@ -1,0 +1,31 @@
+@(quizId: Int, question: String, form: Form[QuizResultForm.Data], postUrl: Call)(implicit request: RequestHeader, messages: Messages)
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>⭕登録</title>
+    </head>
+    <body>
+        <h1>⭕❌クイズ ⭕登録</h1>
+        @request.flash.data.map{ case (name, value) =>
+            <div>@name: @value</div>
+        }
+
+        @if(form.hasGlobalErrors) {
+            @form.globalErrors.map { error: FormError =>
+                <div>
+                    @error.key: @error.message
+                </div>
+            }
+        }
+
+        <h2>問題：@question → 答え：⭕</h2>
+
+        @helper.form(postUrl) {
+            @helper.inputText(form("teamId"), '_label -> "チームID")
+            <input type="hidden" name="quizId" value="@quizId" />
+            <input type="hidden" name="answer" value="◯" />
+            <button>team entry</button>
+        }
+    </body>
+</html>

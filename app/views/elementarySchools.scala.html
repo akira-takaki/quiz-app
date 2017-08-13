@@ -1,0 +1,16 @@
+@(list: List[(Int, String)])
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>小学校 一覧</title>
+    </head>
+    <body>
+        <h1>小学校 一覧</h1>
+        <ul>
+            @for(each <- list) {
+                <li>@each._2</li>
+            }
+        </ul>
+    </body>
+</html>

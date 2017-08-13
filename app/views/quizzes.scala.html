@@ -1,0 +1,25 @@
+@(quizCategoryId: Int, quizCategory: String, quizzes: List[(Int, String)])
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>@quizCategory クイズ 一覧</title>
+    </head>
+    <body>
+        <h1>@quizCategory クイズ 一覧</h1>
+        @quizCategoryId match {
+            case 1 => { @* ⭕❌クイズ *@
+                <ul>
+                @for(quiz <- quizzes) {
+                    <li>
+                        @quiz._2
+                    <a href="@routes.QuizResultController.checkQuizResultEntry(quiz._1)">登録チェック</a>
+                    <a href="@routes.QuizResultController.showQuizResultMaruForm(quiz._1)">⭕登録</a>
+                    <a href="@routes.QuizResultController.showQuizResultBatsuForm(quiz._1)">❌登録</a>
+                    </li>
+                }
+                </ul>
+            }
+        }
+    </body>
+</html>

@@ -1,0 +1,12 @@
+@(question: String, answer: String)
+
+@main("⭕️❌クイズ 正解") {
+    <div class="container">
+        <h2>問題：@question</h2>
+        @if(answer.equals("◯")) {
+            <img src="@routes.Assets.versioned("images/maru.png")" style="width: 50%; height: 50%;">
+        } else {
+            <img src="@routes.Assets.versioned("images/batsu.png")" style="width: 50%; height: 50%;">
+        }
+    </div>
+}

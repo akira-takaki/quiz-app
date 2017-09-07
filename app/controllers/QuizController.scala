@@ -5,8 +5,16 @@ import play.api.Play.current
 import play.api.db.DB
 import play.api.mvc._
 
+/**
+  * クイズ コントローラー
+  */
 class QuizController extends Controller {
 
+  /**
+    * 指定されたカテゴリーのクイズを一覧する。
+    *
+    * @param categoryId
+    */
   def list(categoryId: Int) = Action {
     DB.withConnection { implicit c =>
       val quizCategoryName = SQL("SELECT name FROM Quiz_Category WHERE id = {id};")

@@ -1,4 +1,4 @@
-@(question: String, noEntryTeams: List[(Int, String)])
+@(quizId: Int, question: String, noEntryTeams: List[(Int, String)])
 
 @main("未登録チーム一覧") {
     <div class="container">
@@ -9,5 +9,6 @@
             <li class="list-group-item" style="font-size: xx-large">@team._2</li>
         }
         </ul>
+        <a href="@routes.QuizResultController.showQuizAnswerMaruBatsu(quizId)">答え</a>
     </div>
 } <meta http-equiv="Refresh" content="2">

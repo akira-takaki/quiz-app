@@ -1,6 +1,7 @@
 package controllers
 
 import anorm._
+import anorm.SqlParser._
 import daos.QuizDao
 import play.api.i18n.Messages.Implicits._
 import play.api.Play.current
@@ -8,6 +9,9 @@ import play.api.db.DB
 import play.api.mvc._
 import play.api.data._
 
+/**
+  * クイズの回答 コントローラー
+  */
 class QuizResultController extends Controller with QuizDao {
   import QuizResultForm._
 
@@ -108,6 +112,11 @@ class QuizResultController extends Controller with QuizDao {
     }
   }
 
+  /**
+    * 未登録チーム一覧
+    *
+    * @param quizId
+    */
   def checkQuizResultEntry(quizId: Int) = Action {
     DB.withConnection { implicit c =>
       val question = SQL("SELECT question FROM Quiz WHERE id = {id};")
@@ -126,7 +135,7 @@ class QuizResultController extends Controller with QuizDao {
           .on('quiz_id -> quizId)
           .withResult(go(_, List.empty[(Int, String)])) match {
         case Left(throwables) => Ok(throwables.toString())
-        case Right(list) => Ok(views.html.checkQuizResultEntry(question, list))
+        case Right(list) => Ok(views.html.checkQuizResultEntry(quizId, question, list))
       }
     }
   }
@@ -141,6 +150,25 @@ class QuizResultController extends Controller with QuizDao {
       }
     }
     case _ => list
+  }
+
+  /**
+    * ⭕❌クイズ 回答
+    *
+    * @param quizId
+    */
+  def showQuizAnswerMaruBatsu(quizId: Int) = Action {
+    DB.withConnection { implicit c =>
+      val parser = str("question") ~ str("answer") map {
+        case question ~ answer => (question, answer)
+      }
+
+      val quiz: ((String, String)) = SQL("SELECT question, answer FROM Quiz WHERE id = {quiz_id};")
+        .on('quiz_id -> quizId)
+        .as(parser.single)
+
+      Ok(views.html.showQuizAnswerMaruBatsu(quiz._1, quiz._2))
+    }
   }
 
 }

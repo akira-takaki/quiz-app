@@ -6,9 +6,19 @@ CREATE TABLE Elementary_School (
   name varchar(255) NOT NULL,      -- 名前
   PRIMARY KEY (id)
 );
-INSERT INTO Elementary_School VALUES (1, '席田小学校');
-INSERT INTO Elementary_School VALUES (2, '月隈小学校');
-INSERT INTO Elementary_School VALUES (3, '東月隈小学校');
+INSERT INTO Elementary_School VALUES (1, '那珂南小学校');
+INSERT INTO Elementary_School VALUES (2, '御供所小学校');
+INSERT INTO Elementary_School VALUES (3, '大浜小学校');
+INSERT INTO Elementary_School VALUES (4, '奈良屋小学校');
+INSERT INTO Elementary_School VALUES (5, '千代小学校');
+INSERT INTO Elementary_School VALUES (6, '板付小学校');
+INSERT INTO Elementary_School VALUES (7, '美野島小学校');
+INSERT INTO Elementary_School VALUES (8, '住吉小学校');
+INSERT INTO Elementary_School VALUES (9, '東光小学校');
+INSERT INTO Elementary_School VALUES (10, '月隈小学校');
+INSERT INTO Elementary_School VALUES (11, '東月隈小学校');
+INSERT INTO Elementary_School VALUES (12, '東吉塚小学校');
+INSERT INTO Elementary_School VALUES (13, '吉塚小学校');
 
 
 -- 中学校
@@ -17,9 +27,14 @@ CREATE TABLE Junior_High_School (
   name varchar(255) NOT NULL,      -- 名前
   PRIMARY KEY (id)
 );
-INSERT INTO Junior_High_School VALUES (1, '席田中学校');
-INSERT INTO Junior_High_School VALUES (2, 'ABC中学校');
-INSERT INTO Junior_High_School VALUES (3, 'XYZ中学校');
+INSERT INTO Junior_High_School VALUES (1, '三筑中学校');
+INSERT INTO Junior_High_School VALUES (2, '博多中学校');
+INSERT INTO Junior_High_School VALUES (3, '千代中学校');
+INSERT INTO Junior_High_School VALUES (4, '板付中学校');
+INSERT INTO Junior_High_School VALUES (5, '住吉中学校');
+INSERT INTO Junior_High_School VALUES (6, '東光中学校');
+INSERT INTO Junior_High_School VALUES (7, '席田中学校');
+INSERT INTO Junior_High_School VALUES (8, '吉塚中学校');
 
 
 -- チーム
@@ -28,10 +43,6 @@ CREATE TABLE Team (
   name varchar(255) NOT NULL,      -- 名前
   PRIMARY KEY (id)
 );
-INSERT INTO Team VALUES (1, '席田っ娘');
-INSERT INTO Team VALUES (2, 'あああチーム');
-INSERT INTO Team VALUES (3, 'いいいチーム');
-INSERT INTO Team VALUES (4, 'うううチーム');
 
 
 -- チームメンバー
@@ -44,18 +55,6 @@ CREATE TABLE Team_Member (
   elementary_school_id int,        -- 小学校ID
   PRIMARY KEY (id)
 );
-INSERT INTO Team_Member VALUES (1, 1, '石原 優唯', 1, 1, 2);
-INSERT INTO Team_Member VALUES (2, 1, '松村 裕香', 1, 1, 2);
-INSERT INTO Team_Member VALUES (3, 1, '梅野 美優樹', 1, 1, 3);
-INSERT INTO Team_Member VALUES (4, 2, '名前1', 1, 2, 2);
-INSERT INTO Team_Member VALUES (5, 2, '名前2', 1, 2, 2);
-INSERT INTO Team_Member VALUES (6, 2, '名前3', 1, 2, 3);
-INSERT INTO Team_Member VALUES (7, 3, '名前4', 1, 3, 2);
-INSERT INTO Team_Member VALUES (8, 3, '名前5', 1, 3, 2);
-INSERT INTO Team_Member VALUES (9, 3, '名前6', 1, 3, 3);
-INSERT INTO Team_Member VALUES (10, 4, '名前7', 1, 3, 2);
-INSERT INTO Team_Member VALUES (11, 4, '名前8', 1, 3, 2);
-INSERT INTO Team_Member VALUES (12, 4, '名前9', 1, 3, 3);
 
 
 -- クイズ分類
@@ -66,6 +65,11 @@ CREATE TABLE Quiz_Category (
   PRIMARY KEY (id)
 );
 INSERT INTO Quiz_Category VALUES (1, 1, '⭕️❌クイズ');
+INSERT INTO Quiz_Category VALUES (2, 2, '三連馬跳び+クイズ');
+INSERT INTO Quiz_Category VALUES (3, 3, 'フリースロー+クイズ');
+INSERT INTO Quiz_Category VALUES (4, 4, 'リレー伝言ゲーム');
+INSERT INTO Quiz_Category VALUES (5, 5, '運命のジャンケン');
+INSERT INTO Quiz_Category VALUES (6, 6, 'ファイナルステージ');
 
 
 -- クイズ
@@ -77,11 +81,21 @@ CREATE TABLE Quiz (
   answer varchar(255) NOT NULL,    -- 答え
   PRIMARY KEY (id)
 );
-INSERT INTO Quiz VALUES (1, 1, 1, '絶対零度は 摂氏 -273度 である。' , '◯');
-INSERT INTO Quiz VALUES (2, 1, 2, '問題1' , '◯');
-INSERT INTO Quiz VALUES (3, 1, 3, '問題2' , '×');
-INSERT INTO Quiz VALUES (4, 1, 4, '問題3' , '×');
-INSERT INTO Quiz VALUES (5, 1, 5, '問題4' , '◯');
+INSERT INTO Quiz VALUES (1, 1, 1, '2015年7月発売のドリカムのベストアルバム『私のドリカム』のDisc3の6番目の収録曲は『何度でも』である。' , '◯');
+INSERT INTO Quiz VALUES (2, 1, 2, '長崎県対馬の方言で、『ぱる』とは『走る』という意味である。' , '×');
+INSERT INTO Quiz VALUES (3, 1, 3, '2016年3月14日は金曜日である。' , '×');
+INSERT INTO Quiz VALUES (4, 1, 4, '「モモ」「チャウミン」「セクワ」「サモサ」は、ベトナム料理の名前である。' , '×');
+INSERT INTO Quiz VALUES (5, 1, 5, '現在、日本で製造・発行されている50円硬貨の表にデザインされている菊の花は、3輪である。' , '◯');
+INSERT INTO Quiz VALUES (6, 1, 6, '2015年時点で西日本鉄道が保有しているバスの台数は日本一である。' , '×');
+INSERT INTO Quiz VALUES (7, 1, 7, '福岡市博多区の人口は福岡市中央区の人口よりも多い。' , '◯');
+INSERT INTO Quiz VALUES (8, 1, 8, '福岡市博多区と中央区のオフィスビルは、半分以上のオフィスビルが満室である。' , '◯');
+INSERT INTO Quiz VALUES (9, 1, 9, '福岡市の公立の小中一貫校は現在6校ありますが、博多区は住吉小中学校のみである。' , '◯');
+INSERT INTO Quiz VALUES (10, 1, 10, '博多弁の「しろしか～」は、「きれいである」の意味である。' , '×');
+INSERT INTO Quiz VALUES (11, 1, 11, '「漢委奴国王（かんのわのなのこくおう）」と刻まれている金印は、江戸時代に発見された。' , '◯');
+INSERT INTO Quiz VALUES (12, 1, 12, '福岡大空襲は昭和20年6月18日におこった。' , '×');
+INSERT INTO Quiz VALUES (13, 1, 13, '福岡藩初代藩主は黒田官兵衛である。' , '×');
+INSERT INTO Quiz VALUES (14, 1, 14, '象の鼻の穴は、1つである。' , '×');
+INSERT INTO Quiz VALUES (15, 1, 15, '象は一生のうち、6回歯が生え変わる。' , '◯');
 
 
 -- 結果
@@ -96,7 +110,7 @@ CREATE TABLE Quiz_Result (
 
 # --- !Downs
 
-DROP TABLE Result;
+DROP TABLE Quiz_Result;
 DROP TABLE Quiz;
 DROP TABLE Quiz_Category;
 DROP TABLE Team_Member;

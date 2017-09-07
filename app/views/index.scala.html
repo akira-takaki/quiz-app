@@ -1,7 +1,17 @@
 @(message: String)
 
-@main("Welcome to Play") {
-
-    @play20.welcome(message)
-
+@mainWithNav("2017 博多区 中学生クイズ大会") {
+    <style>
+            header {
+                margin: 100px 20px 80px;
+                text-align: center;
+                border-bottom: 1px solid #e1e1e1;
+            }
+    </style>
+    <header>
+        <h1>
+            2017 博多区 中学生クイズ大会<br>
+            <small>博多区最強の中学生は誰だ?!</small>
+        </h1>
+    </header>
 }

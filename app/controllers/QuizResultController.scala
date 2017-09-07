@@ -1,13 +1,14 @@
 package controllers
 
 import anorm._
+import daos.QuizDao
 import play.api.i18n.Messages.Implicits._
 import play.api.Play.current
 import play.api.db.DB
 import play.api.mvc._
 import play.api.data._
 
-class QuizResultController extends Controller {
+class QuizResultController extends Controller with QuizDao {
   import QuizResultForm._
 
   /**
@@ -19,10 +20,7 @@ class QuizResultController extends Controller {
     DB.withConnection { implicit c =>
       val postUrl = routes.QuizResultController.entryQuizResultMaru(quizId)
 
-      val question = SQL("SELECT question FROM Quiz WHERE id = {id};")
-        .on('id -> quizId).as(SqlParser.str("question").single)
-
-      Ok(views.html.entryQuizResultMaru(quizId, question, form, postUrl))
+      Ok(views.html.entryQuizResultMaru(quizId, question(quizId), form, postUrl))
     }
   }
 
@@ -35,10 +33,7 @@ class QuizResultController extends Controller {
     DB.withConnection { implicit c =>
       val postUrl = routes.QuizResultController.entryQuizResultBatsu(quizId)
 
-      val question = SQL("SELECT question FROM Quiz WHERE id = {id};")
-        .on('id -> quizId).as(SqlParser.str("question").single)
-
-      Ok(views.html.entryQuizResultBatsu(quizId, question, form, postUrl))
+      Ok(views.html.entryQuizResultBatsu(quizId, question(quizId), form, postUrl))
     }
   }
 
@@ -51,25 +46,26 @@ class QuizResultController extends Controller {
     DB.withConnection { implicit c =>
       val postUrl = routes.QuizResultController.entryQuizResultMaru(quizId)
 
-      val question = SQL("SELECT question FROM Quiz WHERE id = {id};")
-        .on('id -> quizId).as(SqlParser.str("question").single)
-
       val errorFunction = { formWithErrors: Form[Data] =>
-        BadRequest(views.html.entryQuizResultMaru(quizId, question, formWithErrors, postUrl))
+        BadRequest(views.html.entryQuizResultMaru(quizId, question(quizId), formWithErrors, postUrl))
       }
 
       val successFunction = { data: Data =>
-        val answer = SQL("SELECT answer FROM Quiz WHERE id = {id};")
-          .on('id -> quizId).as(SqlParser.str("answer").single)
+        val point = if (answer(quizId).equals(data.answer)) { 1 } else { 0 }
 
-        val point = if (answer.equals(data.answer)) { 1 } else { 0 }
-
-        // TODO 二重登録を考慮して、すでに存在している場合は UPDATE にする
-        val id: Option[Long] = SQL("INSERT INTO Quiz_Result VALUE({team_id}, {quiz_id}, {answer}, {point});")
+        val updateCount = SQL("UPDATE Quiz_Result SET answer = {answer}, point = {point} WHERE team_id = {team_id} AND quiz_id = {quiz_id};")
           .on('team_id -> data.teamId, 'quiz_id -> data.quizId, 'answer -> data.answer, 'point -> point)
-          .executeInsert()
+          .executeUpdate()
+        if (updateCount <= 0) {
+          val id: Option[Long] = SQL("INSERT INTO Quiz_Result VALUE({team_id}, {quiz_id}, {answer}, {point});")
+            .on('team_id -> data.teamId, 'quiz_id -> data.quizId, 'answer -> data.answer, 'point -> point)
+            .executeInsert()
+        }
 
-        Redirect(routes.QuizResultController.entryQuizResultMaru(quizId)).flashing("info" -> "OK")
+        val teamName = SQL("SELECT name FROM Team WHERE id = {id};")
+          .on('id -> data.teamId).as(SqlParser.str("name").single)
+
+        Redirect(routes.QuizResultController.entryQuizResultMaru(quizId)).flashing("info" -> s"「$teamName」 登録OK!")
       }
 
       val formValidationResult = form.bindFromRequest

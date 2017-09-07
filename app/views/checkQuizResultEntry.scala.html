@@ -1,18 +1,13 @@
 @(question: String, noEntryTeams: List[(Int, String)])
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>未登録チーム一覧</title>
-        <meta http-equiv="Refresh" content="2">
-    </head>
-    <body>
+@main("未登録チーム一覧") {
+    <div class="container">
         <h1>未登録チーム一覧</h1>
         <h2>問題：@question</h2>
-        <ul>
-            @for(team <- noEntryTeams) {
-                <li>@team._2</li>
-            }
+        <ul class="list-group">
+        @for(team <- noEntryTeams) {
+            <li class="list-group-item" style="font-size: xx-large">@team._2</li>
+        }
         </ul>
-    </body>
-</html>
+    </div>
+} <meta http-equiv="Refresh" content="2">

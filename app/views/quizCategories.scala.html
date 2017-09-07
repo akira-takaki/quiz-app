@@ -1,19 +1,13 @@
 @(quizCategories: List[(Int, String)])
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>クイズ分類 一覧</title>
-    </head>
-    <body>
-        <h1>クイズ分類 一覧</h1>
-        <ul>
-            @for(quizCategory <- quizCategories) {
-                <li>
-                    <a href="@routes.QuizController.list(quizCategory._1)">@quizCategory._2</a>
-                    <a href="@routes.TeamController.teamRanking(quizCategory._1)">ランキング</a>
-                </li>
-            }
-        </ul>
-    </body>
-</html>
+@mainWithNav("クイズ分類 一覧") {
+    <h1>クイズ分類 一覧</h1>
+    <ul>
+    @for(quizCategory <- quizCategories) {
+        <li>
+            <a href="@routes.QuizController.list(quizCategory._1)">@quizCategory._2</a>
+            <a href="@routes.TeamController.teamRanking(quizCategory._1)">ランキング</a>
+        </li>
+    }
+    </ul>
+}

@@ -99,12 +99,19 @@ class QuizResultController extends Controller with QuizDao {
 
         val point = if (answer.equals(data.answer)) { 1 } else { 0 }
 
-        // TODO 二重登録を考慮して、すでに存在している場合は UPDATE にする
-        val id: Option[Long] = SQL("INSERT INTO Quiz_Result VALUE({team_id}, {quiz_id}, {answer}, {point});")
+        val updateCount = SQL("UPDATE Quiz_Result SET answer = {answer}, point = {point} WHERE team_id = {team_id} AND quiz_id = {quiz_id};")
           .on('team_id -> data.teamId, 'quiz_id -> data.quizId, 'answer -> data.answer, 'point -> point)
-          .executeInsert()
+          .executeUpdate()
+        if (updateCount <= 0) {
+          val id: Option[Long] = SQL("INSERT INTO Quiz_Result VALUE({team_id}, {quiz_id}, {answer}, {point});")
+            .on('team_id -> data.teamId, 'quiz_id -> data.quizId, 'answer -> data.answer, 'point -> point)
+            .executeInsert()
+        }
 
-        Redirect(routes.QuizResultController.entryQuizResultBatsu(quizId)).flashing("info" -> "OK")
+        val teamName = SQL("SELECT name FROM Team WHERE id = {id};")
+          .on('id -> data.teamId).as(SqlParser.str("name").single)
+
+        Redirect(routes.QuizResultController.entryQuizResultBatsu(quizId)).flashing("info" -> s"「$teamName」 登録OK!")
       }
 
       val formValidationResult = form.bindFromRequest

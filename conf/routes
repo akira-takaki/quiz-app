@@ -23,5 +23,8 @@ GET     /quizAnswer/show/MaruBatsu/:quizId      controllers.QuizResultController
 
 GET     /teamRanking/:quizCategoryId            controllers.TeamController.teamRanking(quizCategoryId: Int)
 
+GET     /selectTeam                             controllers.PointCounterController.showSelectTeamForm
+POST    /pointCounter                           controllers.PointCounterController.showPointCounter
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                           controllers.Assets.versioned(path="/public", file: Asset)

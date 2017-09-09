@@ -1,0 +1,17 @@
+@(teams: List[(Int, String)], postUrl: Call)
+
+@main("ポイント制クイズ チーム登録") {
+    <div class="container">
+        <h1>ポイント制クイズ チーム登録</h1>
+        @helper.form(postUrl) {
+            @for((team, i) <- teams.zipWithIndex) {
+                <div class="checkbox">
+                    <label>
+                        <input name="teamId[@{i}]" type="checkbox" value="@team._1" />@team._2
+                    </label>
+                </div>
+            }
+            <button type="submit" class="btn btn-primary">チーム登録</button>
+        }
+    </div>
+}

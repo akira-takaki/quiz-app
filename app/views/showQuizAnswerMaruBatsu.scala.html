@@ -1,12 +1,17 @@
-@(question: String, answer: String)
+@(quizId: Int, question: String, answer: String)
 
 @main("⭕️❌クイズ 正解") {
     <div class="container">
-        <h2>問題：@question</h2>
+        <div style="font-size: 400%">
+            問題：<br>
+        @question
+        </div>
         @if(answer.equals("◯")) {
             <img src="@routes.Assets.versioned("images/maru.png")" style="width: 50%; height: 50%;">
         } else {
             <img src="@routes.Assets.versioned("images/batsu.png")" style="width: 50%; height: 50%;">
         }
+        <br>
+        <a href="@routes.QuizResultController.checkQuizResultEntry(quizId + 1)" style="font-size: 500%">次</a>
     </div>
 }

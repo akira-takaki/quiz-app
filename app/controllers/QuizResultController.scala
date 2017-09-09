@@ -174,7 +174,7 @@ class QuizResultController extends Controller with QuizDao {
         .on('quiz_id -> quizId)
         .as(parser.single)
 
-      Ok(views.html.showQuizAnswerMaruBatsu(quiz._1, quiz._2))
+      Ok(views.html.showQuizAnswerMaruBatsu(quizId, quiz._1, quiz._2))
     }
   }
 
